@@ -16,7 +16,7 @@ Synopsis
 [ |SYN_OPT-B| ]
 [ |-C|\ *cpt* ]
 [ |-D|\ [**j**\ \|\ **J**]\ *dx*\ [/*dy*][\ **+v**\ [*pen*]] ]
-[ |-E|\ **s**\ \|\ **t**\ [**+o**\ \|\ **O**\ *dt*][**+r**\ *dt*][**+p**\ *dt*][**+d**\ *dt*][**+f**\ *dt*] ]
+[ |-E|\ **s**\ \|\ **t**\ [**+o**\ \|\ **O**\ *dt*][**+r**\ *dt*][**+p**\ *dt*][**+d**\ *dt*][**+f**\ *dt*][**+l**\ *dt*] ]
 [ |-F|\ [**+a**\ *angle*][\ **+f**\ *font*][\ **+j**\ *justify*][\ **+r**\ [*first*]\ \|\ **+z**\ [*format*]] ]
 [ |-G|\ *color* ]
 [ |-L|\ [*length*\ \|\ **t**\ ] ]
@@ -43,8 +43,6 @@ Synopsis
 
 Examples
 --------
-
-.. include:: explain_example.rst_
 
 To show the display of events visible for May 1, 2018 given the catalog of
 large (>5) magnitude earthquakes that year, using a 2-day rise time during

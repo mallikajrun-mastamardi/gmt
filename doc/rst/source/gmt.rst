@@ -13,7 +13,7 @@ Introduction
 
 GMT is a collection of public-domain Unix tools that allows you to
 manipulate x,y and x,y,z data sets (filtering, trend fitting, gridding,
-projecting, etc.) and produce PostScript illustrations ranging from
+projecting, etc.) and produce illustrations ranging from
 simple x-y plots, via contour maps, to artificially illuminated surfaces
 and 3-D perspective views in black/white or full color. Linear, log10,
 and power scaling is supported in addition to over 30 common map
@@ -61,10 +61,10 @@ Synopsis
 
 **gmt end** [**show**]
     Terminates a GMT modern mode session and automatically converts the registered
-    illustration(s) to the specified formats, then eliminates the temporary work
+    illustration(s) to their specified formats, then eliminates the temporary work
     directory.  The figures are placed in the current directory.
 
-For information on any module, please use our new mechanism to load module documentation
+For information on any module, load the module documentation
 in your browser via gmt :doc:`docs`, e.g.::
 
     gmt docs grdimage
@@ -85,6 +85,9 @@ If no module is given then several other options are available:
 **--show-citation**
     Show the citation for the latest GMT publication.
 
+**--show-classic**
+    List classic module names on stdout and exit.
+
 **--show-cores**
     Show number of available cores.
 
@@ -98,7 +101,7 @@ If no module is given then several other options are available:
     Show the DOI of the current release.
 
 **--show-modules**
-    List module names on stdout and exit.
+    List modern module names on stdout and exit.
 
 **--show-library**
     Show the path of the shared GMT library.
@@ -139,7 +142,7 @@ Custom Modules
 
 The **gmt** program can also load custom modules from shared libraries
 built as specified in the GMT API documentation.  This way your modules
-can benefit form the GMT infrastructure and extend GMT in specific ways.
+can benefit from the GMT infrastructure and extend GMT in specific ways.
 
 The Common GMT Options
 ----------------------
@@ -148,7 +151,7 @@ The Common GMT Options
 
 |SYN_OPT-B|
 **-J**\ *parameters*
-**-Jz**\ \|\ **Z**\ *parameters* **-K** **-O**
+**-Jz**\ \|\ **Z**\ *parameters*
 |SYN_OPT-Rz|
 |SYN_OPT-U|
 |SYN_OPT-V|
@@ -156,6 +159,7 @@ The Common GMT Options
 |SYN_OPT-Y|
 |SYN_OPT-a|
 |SYN_OPT-b|
+|SYN_OPT-c|
 |SYN_OPT-d|
 |SYN_OPT-e|
 |SYN_OPT-f|
@@ -163,6 +167,7 @@ The Common GMT Options
 |SYN_OPT-h|
 |SYN_OPT-i|
 |SYN_OPT-j|
+|SYN_OPT-l|
 |SYN_OPT-n|
 |SYN_OPT-o|
 |SYN_OPT-p|
@@ -176,7 +181,7 @@ Description
 -----------
 
 These are all the common GMT options that remain the same for all GMT
-programs. No space between the option flag and the associated arguments.
+modules. No space between the option flag and the associated arguments.
 
 .. include:: explain_-B_full.rst_
 

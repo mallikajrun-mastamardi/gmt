@@ -10,8 +10,6 @@ and [the GitHub repository](https://github.com/GenericMappingTools/gmt/releases)
 This file provides instructions for installing GMT binary packages on
 different operating systems. Please refer to the [Building Instructions](BUILDING.md)
 for compiling GMT source package (either stable release or development version).
-Note: Distributions may not all update at the same time so check if GMT 6 is
-available first.
 
 ## Contents
 
@@ -53,7 +51,8 @@ If you like, you can add the GMT programs contained in the application bundle to
 your search path for executables. For that, just run GMT-6.x.x.app once and follow
 the instructions at the end of the GMT splash screen.
 
-Note: The installer is always built for the latest macOS version only.
+**Note**: The installer is always built for the latest macOS version only,
+and works for macOS Sierra (10.12) or higher.
 
 ### Install via Homebrew
 
@@ -67,17 +66,21 @@ For the latest GMT 6 version, use:
 
     brew install gmt
 
-If you want to install GMT 5 and GMT 6 alongside, do:
-
-    brew unlink gmt && brew install gmt5
-
-and to go from GMT 6 to GMT 5 (and vice-versa for 5 to 6, but see also the doc about gmtswitch):
-
-    brew unlink gmt && brew link gmt5
-
 You also need to install other GMT run-time dependencies separately:
 
     brew install ghostscript graphicsmagick ffmpeg
+
+If you want to install GMT 5 and GMT 6 alongside, do:
+
+    brew install gmt@5
+
+To go from GMT 6 to GMT 5 (but see also the doc about `gmtswitch`):
+
+    brew unlink gmt && brew link --force gmt@5
+
+And to go from GMT 5 to GMT 6:
+
+    brew unlink gmt@5 && brew link gmt
 
 ### Install via MacPorts
 
@@ -106,19 +109,23 @@ or:
 Installation of GMT through [Fink](http://www.finkproject.org/) is quite easy.
 All required packages will also be installed.
 
-For the latest GMT 5 version use:
+For the latest GMT 6 version, use:
 
-    sudo fink install gmt5
-
-For the legacy GMT 4 version use:
-
-    sudo fink install gmt
-
-The two versions cannot live side by side.
+	sudo fink install gmt6
 
 You also need to install other GMT run-time dependencies separately:
 
-    fink install ghostscript graphicsmagick ffmpeg
+    sudo fink install graphicsmagick ffmpeg
+
+For legacy GMT 5 version, use:
+
+	sudo fink install gmt5
+
+For legacy GMT 4 version, use:
+
+    sudo fink install gmt
+
+These three GMT versions cannot live side by side.
 
 ## Linux
 
@@ -127,6 +134,8 @@ You also need to install other GMT run-time dependencies separately:
 The GMT binary packages provided by the Fedora official repositories are usually too old.
 We provide [the GMT official RPM repository](https://copr.fedorainfracloud.org/coprs/genericmappingtools/gmt)
 to allow Fedora users access the latest GMT releases in an easy way.
+
+**NOTE: The RPM repository provides GMT packages for Fedora 29 or newer only!**
 
 Fedora users can add the GMT official RPM repository and install gmt by:
 
@@ -141,7 +150,7 @@ Fedora users can add the GMT official RPM repository and install gmt by:
 
 You may also install other optional dependencies for more capabilities within GMT:
 
-    dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-`rpm -E %fedora`.noarch.rpm
     dnf install GraphicsMagick ffmpeg gdal
 
 **Note**:
@@ -149,7 +158,7 @@ If you already installed the GMT packages provided by Fedora,
 you have to uninstall them before installing the new GMT packages provided
 by the official GMT repository. You can uninstall the older packages by:
 
-    dnf uninstall GMT dcw-gmt gshhg-gmt-nc4 gshhg-gmt-nc4-full gshhg-gmt-nc4-high
+    dnf remove GMT dcw-gmt gshhg-gmt-nc4 gshhg-gmt-nc4-full gshhg-gmt-nc4-high
 
 ### RHEL/CentOS
 
@@ -178,7 +187,7 @@ For RHEL/CentOS, run:
 
 You may also install other optional dependencies for more capabilities within GMT:
 
-    yum localinstall --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm
+    yum localinstall --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-`rpm -E %rhel`.noarch.rpm
     yum install GraphicsMagick ffmpeg gdal
 
 **Note**:
@@ -186,8 +195,7 @@ If you already installed the GMT packages provided by EPEL,
 you have to uninstall them before installing the new GMT packages provided
 by the official GMT repository. You can uninstall the older packages by:
 
-    yum uninstall GMT dcw-gmt gshhg-gmt-nc4 gshhg-gmt-nc4-full gshhg-gmt-nc4-high
-
+    yum remove GMT dcw-gmt gshhg-gmt-nc4 gshhg-gmt-nc4-full gshhg-gmt-nc4-high
 
 ### Ubuntu/Debian
 

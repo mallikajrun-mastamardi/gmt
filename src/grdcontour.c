@@ -987,7 +987,7 @@ int GMT_grdcontour (void *V_API, int mode, void *args) {
 
 	uint64_t ij, *n_seg = NULL;
 
-	size_t n_save = 0, n_alloc = 0, n_save_alloc = 0, n_tmp, *n_seg_alloc = NULL;
+	size_t n_save = 0, n_alloc = 0, n_save_alloc = 0, *n_seg_alloc = NULL;
 
 	char cont_label[GMT_LEN256] = {""}, format[GMT_LEN256] = {""};
 
@@ -1119,7 +1119,7 @@ int GMT_grdcontour (void *V_API, int mode, void *args) {
 		/* Free the P object unless it was an input memory object */
 		ptr = cptfile;	/* To avoid warning message from gmt_M_file_is_memory */
 		if (!gmt_M_file_is_memory (ptr) && GMT_Destroy_Data (API, &P) != GMT_NOERROR) {
-			Return (API->error);
+			bailout (API->error);
 		}
 		if (is_continuous) {	/* More bad news */
 			GMT_Report (API, GMT_MSG_NORMAL, "Syntax error -N: CPT file must be discrete, not continuous\n");
@@ -1135,15 +1135,15 @@ int GMT_grdcontour (void *V_API, int mode, void *args) {
 		}
 		GMT_Report (API, GMT_MSG_DEBUG, "Run: grdview %s\n", cmd1);
 		if ((API->error = GMT_Call_Module (API, "grdview", GMT_MODULE_CMD, cmd1))) {
-			GMT_Report (API, GMT_MSG_NORMAL, "Failed to call grdview\n");
-			Return (API->error);
+			GMT_Report (API, GMT_MSG_NORMAL, "The call to grdview failed\n");
+			bailout (API->error);
 		}
 		/* Required options for grdcontour */
 		if (API->GMT->current.setting.run_mode == GMT_CLASSIC) strcat (cmd2, " -O");	/* If classic mode then we need to say we this is an overlay */
 		GMT_Report (API, GMT_MSG_DEBUG, "Run: grdcontour %s\n", cmd2);
 		if ((API->error = GMT_Call_Module (API, "grdcontour", GMT_MODULE_CMD, cmd2))) {
-			GMT_Report (API, GMT_MSG_NORMAL, "Failed to call grdcontour\n");
-			Return (API->error);
+			GMT_Report (API, GMT_MSG_NORMAL, "The call to grdcontour failed\n");
+			bailout (API->error);
 		}
 		bailout (GMT_NOERROR);	/* And we made it to the end, so get out of here */
 	}
@@ -1299,7 +1299,6 @@ int GMT_grdcontour (void *V_API, int mode, void *args) {
 	if (Ctrl->C.cpt) {	/* Got a CPT */
 		/* Set up which contours to draw based on the CPT slices and their attributes */
 		n_contours = P->n_colors + 1;	/* Since n_colors refer to slices */
-		n_tmp = 0;
 		cont = gmt_M_memory (GMT, NULL, n_contours, struct PSCONTOURGRD);
 		for (i = c = 0; i < P->n_colors; i++) {
 			if (P->data[i].skip) continue;
@@ -1337,7 +1336,6 @@ int GMT_grdcontour (void *V_API, int mode, void *args) {
 			if (za) gmt_M_free (GMT, za);
 			Return (GMT_RUNTIME_ERROR);
 		}
-		n_tmp = 0;
 		n_contours = na + nc;
 		cont = gmt_M_memory (GMT, NULL, n_contours, struct PSCONTOURGRD);
 		for (c = 0; c < (int)nc; c++) {
@@ -1407,7 +1405,6 @@ int GMT_grdcontour (void *V_API, int mode, void *args) {
 	}
 	else if (!gmt_M_is_dnan (Ctrl->C.single_cont) || !gmt_M_is_dnan (Ctrl->A.single_cont)) {	/* Plot one or two contours only  */
 		n_contours = 0;
-		n_tmp = 0;
 		cont = gmt_M_memory (GMT, cont, 2, struct PSCONTOURGRD);
 		if (!gmt_M_is_dnan (Ctrl->C.single_cont)) {
 			cont[n_contours].type = 'C';

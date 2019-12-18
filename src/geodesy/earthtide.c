@@ -453,7 +453,7 @@ GMT_LOCAL void step2diu(double *xsta, double fhr, double t, double *xcorsta) {
 		0.,0.,1.,0.,0.,.01,0.,0. };
 
 	int i, j;
-	double h, t2, t3, t4, cosphi2, sinphi2, sin_tf, cos_tf;
+	double h, t2, t3, cosphi2, sinphi2, sin_tf, cos_tf;
 	double p, s, de, dn, dr, pr, ps, zla, tau, zns, rsta, cosla, sinla, thetaf, cosphi, sinphi;
 
 	/* ** note, following table is derived from dehanttideinelMJD.f (2000oct30 16:10) */
@@ -494,7 +494,6 @@ GMT_LOCAL void step2diu(double *xsta, double fhr, double t, double *xcorsta) {
 	/* *** v.dehant 2 */
 	t2 = t * t;
 	t3 = t * t2;
-	t4 = t2 * t2;
 	s = 218.31664563 + 481267.88194 * t - .0014663889 * t2 + 1.85139e-6 * t3;
 	tau = fhr * 15. + 280.4606184 + t * 36000.7700536 + t * 3.8793e-4 * t - t3 * 2.58e-8 - s;
 	pr = t * 1.396971278f + t * 3.08889e-4f * t + t3 * 2.1e-8f + t2 * 7e-9f;
@@ -1378,7 +1377,7 @@ GMT_LOCAL int parse (struct GMT_CTRL *GMT, struct EARTHTIDE_CTRL *Ctrl, struct G
 			case 'T':	/* Select time range for time-series tide estimates */
 				Ctrl->T.active = true;
 				if (!opt->arg) {
-					GMT_Report (GMT->parent, GMT_MSG_NORMAL, "Error -T: must provide a valide date\n", opt->arg);
+					GMT_Report (GMT->parent, GMT_MSG_NORMAL, "Error -T: must provide a valid date\n", opt->arg);
 					n_errors++;
 					break;
 				}

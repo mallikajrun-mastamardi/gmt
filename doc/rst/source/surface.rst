@@ -17,6 +17,7 @@ Synopsis
 |SYN_OPT-R|
 [ |-A|\ *aspect_ratio*\ \|\ **m** ]
 [ |-C|\ *convergence_limit*\ [%] ]
+[ |-D|\ *breakline_file*]
 [ |-L|\ **l**\ *lower* ] [ **-Lu**\ *upper* ]
 [ |-M|\ *max_radius*\ [**u**] ]
 [ |-N|\ *max_iterations* ]
@@ -110,6 +111,14 @@ Optional Arguments
     intermediate (coarser) grids the effective convergence limit is divided
     by the grid spacing multiplier.
 
+.. _-D:
+
+**-D**\ *breakline*\
+    Use xyz data in the <breakline> file as a 'soft breakline'. A 'soft breakline'
+    is a line whose vertices will be used to constrain the nearest grid nodes without
+    any further interpolation. A coastline or a lake shore are good examples of
+    'soft breaklines'. Multi-segments files are accepted.
+
 .. _-L:
 
 **-Ll**\ *lower* and **-Lu**\ *upper*
@@ -128,7 +137,7 @@ Optional Arguments
 **-M**\ *max_radius*\ [**u**]
     After solving for the surface, apply a mask so that nodes farther
     than *max_radius* away from a data constraint is set to NaN [no masking].
-    Append a distance unit (see UNITS) if needed.
+    Append a distance unit (see `Units`_) if needed.
     One can also select the nodes to mask by using the **-M**\ *n_cells*\ **c** form.
     Here *n_cells* means the number of cells around the node controlled by a data point. As an example
     **-M0c** means that only the cell where point lies is filled, **-M1c** keeps one cell

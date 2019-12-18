@@ -69,6 +69,7 @@ if (NOT GM)
 else (NOT GM)
 	execute_process(COMMAND gm help OUTPUT_VARIABLE answer OUTPUT_STRIP_TRAILING_WHITESPACE)
 	string (REGEX MATCH "[0-9]+\\.[0-9]+\\.[0-9]+" answer "${answer}")
+	set (GMT_CONFIG_GM_VERSION "${answer}" CACHE INTERNAL "GM version message")
 	set (GMT_CONFIG_GM_MESSAGE "yes (${answer})" CACHE INTERNAL "GM config message")
 endif (NOT GM)
 
@@ -79,6 +80,7 @@ if (NOT FFMPEG)
 else (NOT FFMPEG)
 	execute_process(COMMAND ffmpeg -version OUTPUT_VARIABLE answer OUTPUT_STRIP_TRAILING_WHITESPACE)
 	string (REGEX MATCH "[0-9]+\\.[0-9]+\\.[0-9]+" answer "${answer}")
+	set (GMT_CONFIG_FFMPEG_VERSION "${answer}" CACHE INTERNAL "FFMPEG version message")
 	set (GMT_CONFIG_FFMPEG_MESSAGE "yes (${answer})" CACHE INTERNAL "FFMPEG config message")
 endif (NOT FFMPEG)
 
@@ -105,6 +107,7 @@ else (WIN32)
 		set (GMT_CONFIG_GS_MESSAGE "no" CACHE INTERNAL "GS config message")
 	else (NOT GS)
 		execute_process(COMMAND gs --version OUTPUT_VARIABLE answer OUTPUT_STRIP_TRAILING_WHITESPACE)
+		set (GMT_CONFIG_GS_VERSION "${answer}" CACHE INTERNAL "GS version message")
 		set (GMT_CONFIG_GS_MESSAGE "yes (${answer})" CACHE INTERNAL "GS config message")
 	endif (NOT GS)
 endif (WIN32)
@@ -218,6 +221,7 @@ endif (NOT DEFINED GMT_EXCLUDE_ZLIB)
 if (ZLIB_FOUND)
 	set (HAVE_ZLIB TRUE CACHE INTERNAL "System has ZLIB")
 	include_directories (${ZLIB_INCLUDE_DIRS})
+	list (APPEND GMT_OPTIONAL_LIBRARIES ${ZLIB_LIBRARY})
 endif (ZLIB_FOUND)
 
 
@@ -239,12 +243,6 @@ if (OPENMP_FOUND AND GMT_OPENMP)
 	set (HAVE_OPENMP TRUE CACHE INTERNAL "OpenMP enabled." FORCE)
 	set (GMT_CONFIG_OPENMP_MESSAGE "enabled"
 		CACHE INTERNAL "OPENMP config message")
-	if (WIN32 AND OMP_DLL_LOC)
-		# UGLY AND RISKY PATCH FOR THE CPACK BUG OF NOT COPYING THE OMP DLL. THIS PATCH RELIES
-		# ON THE SETTING OF THE OMP_DLL_LOC VARIABLE IN ConfigUser.cmake. MINE HAS:
-		# set (OMP_DLL_LOC "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/redist/x64/Microsoft.VC120.OPENMP/vcomp120.dll")
-		install(FILES ${OMP_DLL_LOC} DESTINATION bin COMPONENT Libraries)
-	endif (WIN32 AND OMP_DLL_LOC)
 else (OPENMP_FOUND AND GMT_OPENMP)
 	set (HAVE_OPENMP FALSE CACHE INTERNAL "OpenMP disabled." FORCE)
 	set (GMT_CONFIG_OPENMP_MESSAGE "disabled"
@@ -295,7 +293,7 @@ find_package (DCW)
 if (DO_EXAMPLES OR DO_TESTS AND NOT DCW_FOUND)
 	message (FATAL_ERROR "Cannot proceed without DCW polygons. "
 		"Need to either set DCW_ROOT or disable tests."
-		"Obtain dcw-gmt-<version>.tar.gz or dcw-gmt-<version>.zip from ftp://ftp.soest.hawaii.edu/gmt and make DCW_ROOT variable point to the directory where you unarchived the files")
+		"Obtain dcw-gmt-<version>.tar.gz from ftp://ftp.soest.hawaii.edu/gmt and make DCW_ROOT variable point to the directory where you unarchived the files")
 endif (DO_EXAMPLES OR DO_TESTS AND NOT DCW_FOUND)
 
 if (DO_API_TESTS)
@@ -333,7 +331,7 @@ set (GMT_PROGS_SRCS blockmean.c blockmedian.c blockmode.c docs.c dimfilter.c fil
 
 # Legacy modules for which to install compatibility links via
 # install_module_symlink
-set (GMT_COMPAT_MODULES minmax gmt2rgb gmtstitch gmtdp grdreformat ps2raster)
+set (GMT_COMPAT_MODULES minmax gmtstitch gmtdp grdreformat ps2raster originator)
 
 # libpslib
 set (GMT_PSL_SRCS postscriptlight.c declspec.h psl_config.h PSL_Standard+.h
@@ -447,7 +445,7 @@ set_target_properties (pslib
 	SOVERSION ${GMT_LIB_SOVERSION}
 	DEFINE_SYMBOL "LIBRARY_EXPORTS")
 
-# If a renaming of the gmtpslpsl dll has been set in ConfigUser.cmake
+# If a renaming of the psl dll has been set in ConfigUser.cmake
 if (WIN32 AND PSL_DLL_RENAME)
 	set_target_properties (pslib PROPERTIES RUNTIME_OUTPUT_NAME ${PSL_DLL_RENAME})
 endif (WIN32 AND PSL_DLL_RENAME)

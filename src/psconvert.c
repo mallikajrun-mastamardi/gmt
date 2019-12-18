@@ -32,7 +32,6 @@
  */
 
 #include "gmt_dev.h"
-#include "gmt_gsformats.h"
 
 #define THIS_MODULE_CLASSIC_NAME	"psconvert"
 #define THIS_MODULE_MODERN_NAME	"psconvert"
@@ -709,16 +708,7 @@ GMT_LOCAL int parse (struct GMT_CTRL *GMT, struct PS2RASTER_CTRL *Ctrl, struct G
 				break;
 			case 'F':	/* Set explicitly the output file name */
 				if ((Ctrl->F.active = gmt_check_filearg (GMT, 'F', opt->arg, GMT_OUT, GMT_IS_DATASET)) != 0) {
-					char *ext = NULL;
 					Ctrl->F.file = strdup (opt->arg);
-					if (!gmt_M_file_is_memory (Ctrl->F.file) && (ext = strchr (Ctrl->F.file, '.'))) {	/* Make sure file name has no graphics file format extension */
-						unsigned int kk = 0;
-						ext++;	/* Skip the period */
-						while (gmt_session_format[kk] && strcmp (ext, gmt_session_format[kk]))
-							kk++;	/* Not matching that format, go to next */
-						if (gmt_session_format[kk])	/* Did match one of the extensions, remove it */
-							gmt_chop_ext (Ctrl->F.file);
-					}
 					gmt_filename_get (Ctrl->F.file);
 				}
 				else
@@ -1452,6 +1442,17 @@ char *noquote_name (char *file) {
 		return strdup (file);
 }
 
+GMT_LOCAL int make_dir_if_needed (struct GMTAPI_CTRL *API, char *dir) {
+	struct stat S;
+	int err = stat (dir, &S);
+	if (err && errno == ENOENT && gmt_mkdir (dir)) {	/* Does not exist - try to create it */
+		GMT_Report (API, GMT_MSG_NORMAL, "Unable to create directory %s.\n", dir);
+		return (GMT_RUNTIME_ERROR);
+	}
+	return (GMT_NOERROR);
+}
+
+
 int GMT_psconvert (void *V_API, int mode, void *args) {
 	unsigned int i, j, k, pix_w = 0, pix_h = 0, got_BBatend;
 	int sys_retval = 0, r, pos_file, pos_ext, error = 0;
@@ -1583,6 +1584,10 @@ int GMT_psconvert (void *V_API, int mode, void *args) {
 		GMT_Report (API, GMT_MSG_VERBOSE, "Selecting ppmraw device since GDAL not available.\n");
 		Ctrl->T.device = GS_DEV_PPM;
 #endif
+	}
+
+	if (Ctrl->D.active && (error = make_dir_if_needed (API, Ctrl->D.dir))) {	/* Specified output directory; create if it does not exists */
+		Return (error);
 	}
 
 	/* Parameters for all the formats available */
@@ -2424,8 +2429,8 @@ int GMT_psconvert (void *V_API, int mode, void *args) {
 			if (Ctrl->T.ps) {	/* Under modern mode we can also save the PS file by renaming it */
 				strncpy (out_file, Ctrl->F.file, PATH_MAX-1);
 				strcat (out_file, ".ps");
-				GMT_Report (API, GMT_MSG_DEBUG, "Rename %s -> %s\n", ps_names[0], out_file);
-				if (gmt_rename_file (GMT, ps_names[0], out_file, GMT_COPY_FILE))
+				GMT_Report (API, GMT_MSG_DEBUG, "Rename %s -> %s\n", tmp_file, out_file);
+				if (gmt_rename_file (GMT, tmp_file, out_file, GMT_COPY_FILE))
 					Return (GMT_RUNTIME_ERROR);
 			}
 		}
