@@ -1,0 +1,187 @@
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
+
+C:\Users\yytcadm>c:\Polarion\Polarion_update\update.bat
+====================
+Polarion Update 2310
+====================
+
+Please go through this checklist before continuing:
+
+- read file README.txt
+
+- make sure that Polarion server is not running
+and nobody (e.g. console window) holds the Polarion
+installation folder lock
+
+- make sure that current user has write permission
+for the whole Polarion installation folder
+
+- running as Administrator is recommended
+
+Press Enter key to continue...
+
+-----------------
+Update properties
+-----------------
+
+Please enter Polarion installation directory or press Enter key to use the default value [C:/Polarion]
+
+
+Checking installation directory: C:/Polarion
+Found product: 'Polarion ALM' version 22 R2
+
+=======
+WARNING
+=======
+We're sorry, but the license stored in
+  C:\Polarion\polarion\license
+is not compatible with version 2310.
+You will have to activate Polarion after the update is finished.
+For this you will need License Key (for online activation) or
+Polarion license file (for offline activation).
+
+You should have received your License Key together with the confirmation
+of your purchase. If you need to activate Polarion in an offline mode and
+do not have Polarion license file yet then follow instructions provided
+by Polarion user interface after the update has finished.
+
+Proceed with the update? (y, n)
+y
+
+
+Summary
+  Product ................... Polarion ALM
+  Installation type ......... standalone
+  Installation directory .... C:\Polarion
+  Maven directory ........... C:\Polarion\maven
+  Repository url ............ https://polarion-server.net.plm.eds.com/repo/
+  Data directory ............ C:\Polarion\data
+  Workspace directory ....... C:\Polarion\data\workspace
+  Polarion-data directory ... C:\Polarion\data\workspace\polarion-data
+Proceed with the update? (y, n)
+y
+
+
+--------------------
+Update program files
+--------------------
+Moving 2 files to c:\Polarion\Polarion_update\_backup-20230510-1212.39
+Copying 22225 files to C:\Polarion
+Copied 5498 empty directories to 167 empty directories under C:\Polarion
+Copying 1 file to C:\Polarion
+Copying 3834 files to C:\Polarion
+Copying 2 files to C:\Polarion
+Copying 134 files to C:\Polarion
+Copying 4 files to C:\Polarion
+Copying 1 file to C:\Polarion\polarion
+Moving 1 file to c:\Polarion\Polarion_update\_backup-20230510-1212.39\polarion
+Copying 1 file to C:\Polarion\polarion
+DONE
+
+-----------------
+Update data files
+-----------------
+Ensuring reindex by deleting C:\Polarion\data\workspace\polarion-data
+DONE
+
+------------------
+Update repository
+------------------
+
+Please provide a user with write permissions
+for the entire repository: https://polarion-server.net.plm.eds.com/repo/
+(Configuration updates will be done in the name of this user.)
+
+Login:
+admin
+OK
+
+Created dir: c:\Polarion\Polarion_update\temp\_root\.polarion
+Deleting: c:\Polarion\Polarion_update\temp\_root\.polarion\projects.xml
+Processing project library on path /library
+  - processing /library/.polarion/hats/_default/portal/topics.xml
+Deleting: c:\Polarion\Polarion_update\temp\library\.polarion\hats\_default\portal\topics.xml
+Copying 2 files to c:\Polarion\Polarion_update\temp\library
+Committing changes...
+revision: 2
+Processing project drivepilot on path /Demo Projects/drivepilot
+  - processing /Demo Projects/drivepilot/.polarion/hats/_default/portal/topics.xml
+  prepared for commit
+Copying 2 files to c:\Polarion\Polarion_update\temp\drivepilot
+Committing changes...
+revision: 3
+Processing project elibrary on path /Demo Projects/elibrary
+  - processing /Demo Projects/elibrary/.polarion/hats/_default/portal/topics.xml
+  prepared for commit
+Copying 2 files to c:\Polarion\Polarion_update\temp\elibrary
+Committing changes...
+revision: 4
+Processing repository root
+Created dir: c:\Polarion\Polarion_update\temp\_root\.polarion\watchlists
+  - processing /.polarion/security/permissions.xml
+  prepared for commit
+  - processing /.polarion/notifications/notifications.xml
+  prepared for commit
+  - processing /.polarion/hats/_default/portal/topics.xml
+  prepared for commit
+Copying 2 files to c:\Polarion\Polarion_update\temp\_root
+Deleting: c:\Polarion\Polarion_update\temp\_root\.polarion\watchlists\keepdir.xml
+Committing changes...
+revision: 5
+DONE
+
+----------------------------------
+Update bundled software components
+----------------------------------
+
+New versions of 3rd party software components are bundled
+with current Polarion and are highly recommended:
+ Subversion 1.14.2
+ Apache 2.4.55
+
+This script can prepare the update of these components.
+
+---------------------
+Apache and Subversion
+---------------------
+
+Do you want to prepare update of bundled Apache and Subversion now? (y, n)
+y
+
+Copying new Subversion to C:\Polarion\bundled\svn_1.14.2
+Copying 347 files to C:\Polarion\bundled\svn_1.14.2
+Copying new Apache to C:\Polarion\bundled\apache_2.4.55
+Copying 783 files to C:\Polarion\bundled\apache_2.4.55
+Copied 26 empty directories to 4 empty directories under C:\Polarion\bundled\apache_2.4.55
+
+Configuring new Apache...
+
+Used values
+  Server Root: C:/Polarion/bundled/apache
+  Server Name: polarion-server.net.plm.eds.com
+  Server Port: 80
+  Server Admin: mastamar@ugs.com
+  Home Path: C:/Polarion/polarion
+  Tomcat Port: 8889
+  Repository Path: C:/Polarion/data/svn
+  Logs Dir C:/Polarion/data/logs/apache
+
+Moving 18 files to C:\Polarion\bundled\apache_2.4.55\conf
+
+Update of Apache and Subversion is prepared. To actually use new versions
+of Apache and Subversion please finish the update manually according
+to the instructions in the Third-party_for_(your_operating_system).txt file.
+DONE
+
+Press Enter key to continue...
+
+
+================
+Update COMPLETE.
+================
+
+Press Enter key to continue...
+
+
+C:\Users\yytcadm>
